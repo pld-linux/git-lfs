@@ -9,15 +9,12 @@ Version:	1.0.0
 Release:	1
 License:	MIT
 Group:		Applications/Archiving
-Source0:	https://github.com/github/git-lfs/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	3aa5af50952fd447bbf4d4386a382e39
+Source0:	https://github.com/github/git-lfs/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	c05a2a2947b56fb0d7e2ede15d47a86c
 URL:		https://git-lfs.github.com/
-BuildRequires:	bison
 BuildRequires:	git-core
 BuildRequires:	golang
-BuildRequires:	perl-Digest-SHA
 %{?with_doc:BuildRequires:	ruby-ronn}
-BuildRequires:	which
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_enable_debug_packages 0
