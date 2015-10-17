@@ -15,6 +15,7 @@ URL:		https://git-lfs.github.com/
 BuildRequires:	git-core
 BuildRequires:	golang
 %{?with_doc:BuildRequires:	ronn}
+ExclusiveArch:	%{ix86} %{x8664} %{arm}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_enable_debug_packages 0
