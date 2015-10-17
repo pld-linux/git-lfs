@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_with	tests		# build without tests
-%bcond_with	doc		# build manual page
+%bcond_without	doc		# build manual page
 
 Summary:	Git extension for versioning large files
 Name:		git-lfs
@@ -14,7 +14,7 @@ Source0:	https://github.com/github/git-lfs/archive/v%{version}/%{name}-%{version
 URL:		https://git-lfs.github.com/
 BuildRequires:	git-core
 BuildRequires:	golang
-%{?with_doc:BuildRequires:	ruby-ronn}
+%{?with_doc:BuildRequires:	ronn}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_enable_debug_packages 0
