@@ -14,6 +14,7 @@ Source0:	https://github.com/github/git-lfs/archive/v%{version}/%{name}-%{version
 URL:		https://git-lfs.github.com/
 BuildRequires:	git-core
 BuildRequires:	golang
+BuildRequires:	groff
 %{?with_doc:BuildRequires:	ronn}
 ExclusiveArch:	%{ix86} %{x8664} %{arm}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
