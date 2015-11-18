@@ -5,12 +5,12 @@
 
 Summary:	Git extension for versioning large files
 Name:		git-lfs
-Version:	1.0.0
+Version:	1.0.2
 Release:	1
 License:	MIT
 Group:		Applications/Archiving
 Source0:	https://github.com/github/git-lfs/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	c05a2a2947b56fb0d7e2ede15d47a86c
+# Source0-md5:	5cd8eab8f4b4bcd58cbe1619cdd5cdd2
 URL:		https://git-lfs.github.com/
 BuildRequires:	git-core
 BuildRequires:	golang
