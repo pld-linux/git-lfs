@@ -45,6 +45,10 @@ export GOPATH=$(pwd)
 %endif
 
 %if %{with tests}
+# ensure there are no GIT env vars for testing
+unset GIT_DIR GIT_WORK_TREE
+env | grep GIT_ && exit 3
+
 ./script/test
 ./script/integration
 %endif
