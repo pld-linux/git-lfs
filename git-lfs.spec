@@ -21,6 +21,13 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_enable_debug_packages 0
 
+%ifarch %{ix86}
+%define GOARCH 386
+%endif
+%ifarch %{x8664}
+%define GOARCH amd64
+%endif
+
 %description
 Git Large File Storage (LFS) replaces large files such as audio
 samples, videos, datasets, and graphics with text pointers inside Git,
@@ -35,12 +42,8 @@ ln -s $(pwd) src/github.com/github/%{name}
 %build
 unset GOROOT
 export GOPATH=$(pwd)
-%ifarch %{ix86}
-	GOARCH=386 ./script/bootstrap
-%endif
-%ifarch %{x8664}
-	GOARCH=amd64 ./script/bootstrap
-%endif
+export GOARCH=%{GOARCH}
+sh -x ./script/bootstrap
 
 %if %{with doc}
 ./script/man
