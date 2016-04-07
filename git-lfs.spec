@@ -33,6 +33,7 @@ mkdir -p src/github.com/github
 ln -s $(pwd) src/github.com/github/%{name}
 
 %build
+unset GOROOT
 export GOPATH=$(pwd)
 %ifarch %{ix86}
 	GOARCH=386 ./script/bootstrap
@@ -47,7 +48,7 @@ export GOPATH=$(pwd)
 
 %if %{with tests}
 # ensure there are no GIT env vars for testing
-unset GIT_DIR GIT_WORK_TREE
+#unset GIT_DIR GIT_WORK_TREE
 env | grep GIT_ && exit 3
 
 ./script/test
