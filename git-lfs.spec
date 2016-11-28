@@ -5,22 +5,23 @@
 
 Summary:	Git extension for versioning large files
 Name:		git-lfs
-Version:	1.4.3
+Version:	1.5.2
 Release:	1
 License:	MIT
 Group:		Applications/Archiving
 Source0:	https://github.com/github/git-lfs/archive/v%{version}/%{name}-%{version}.tar.gz
-# Source0-md5:	ee4bf9682af1c223facc772c50aa7488
+# Source0-md5:	6585ffb66f30180c98f8038e5b7d1349
 URL:		https://git-lfs.github.com/
 BuildRequires:	git-core
 BuildRequires:	golang
 BuildRequires:	groff
 %{?with_doc:BuildRequires:	ronn}
-Requires:	git-core >= 1.8.2
+Requires:	git-core >= 1.8.5
 ExclusiveArch:	%{ix86} %{x8664} %{arm}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_enable_debug_packages 0
+%define		import_path	github.com/git-lfs/%{name}
 
 %ifarch %{ix86}
 %define GOARCH 386
@@ -36,14 +37,20 @@ while storing the file contents on a remote server like GitHub.com or
 GitHub Enterprise.
 
 %prep
-%setup -q
-mkdir -p src/github.com/github
-ln -s $(pwd) src/github.com/github/%{name}
+%setup -qc
+
+# preserve for %doc
+mv %{name}-%{version}/*.md .
+
+install -d src/$(dirname %{import_path})
+mv %{name}-%{version} src/%{import_path}
 
 %build
 unset GOROOT
 export GOPATH=$(pwd)
 export GOARCH=%{GOARCH}
+
+cd src/%{import_path}
 sh -x ./script/bootstrap
 
 %if %{with doc}
@@ -52,7 +59,6 @@ sh -x ./script/bootstrap
 
 %if %{with tests}
 # ensure there are no GIT env vars for testing
-#unset GIT_DIR GIT_WORK_TREE
 env | grep GIT_ && exit 3
 
 ./script/test
@@ -63,6 +69,7 @@ env | grep GIT_ && exit 3
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_bindir},%{_mandir}/man1}
 
+cd src/%{import_path}
 install -p bin/git-lfs $RPM_BUILD_ROOT%{_bindir}/git-lfs
 %if %{with doc}
 cp -p man/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
